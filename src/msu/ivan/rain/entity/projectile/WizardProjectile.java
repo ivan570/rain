@@ -7,10 +7,10 @@ public class WizardProjectile extends Projectile {
 
 	public WizardProjectile(int xOrigin, int yOrigin, double direction) {
 		super(xOrigin, yOrigin, direction);
-		range = 200;
+		range = 2;
 		damage = 20;
 		speed = 4;
-		sprite = Sprite.grass;
+		sprite = Sprite.projectiles_wizard;
 		rateOfFire = 15;
 		newX = Math.cos(angle) * speed;
 		newY = Math.sin(angle) * speed;
@@ -19,6 +19,13 @@ public class WizardProjectile extends Projectile {
 	@Override
 	public void update() {
 		move();
+		if (distance() > range) {
+			remove();
+		}
+	}
+
+	private double distance() {
+		return Math.sqrt(Math.pow(x - xOrigin, 2) + Math.pow(y - yOrigin, 2));
 	}
 
 	@Override
@@ -28,6 +35,6 @@ public class WizardProjectile extends Projectile {
 	}
 
 	public void render(Screen screen) {
-		screen.renderTile(x, y, sprite);
+		screen.renderProjectile((int) x, (int) y, this);
 	}
 }

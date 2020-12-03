@@ -41,7 +41,7 @@ public class Sprite {
 	public static Sprite player_side_1 = new Sprite(32, 1, 6, SpriteSheet.tiles);
 	public static Sprite player_side_2 = new Sprite(32, 1, 7, SpriteSheet.tiles);
 	
-
+	public static Sprite projectiles_wizard = new Sprite(16, 0, 0, SpriteSheet.projectile_wizard);
 	// for create void tile to avoid NullPointerException
 	public Sprite(int size, int color) {
 		SIZE = size;

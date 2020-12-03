@@ -16,7 +16,6 @@ import msu.ivan.rain.graphics.Screen;
 import msu.ivan.rain.input.Keyboard;
 import msu.ivan.rain.input.Mouse;
 import msu.ivan.rain.level.Level;
-import msu.ivan.rain.level.SpawnLevel;
 import msu.ivan.rain.level.TileCoordinate;
 
 public class Game extends Canvas implements Runnable {

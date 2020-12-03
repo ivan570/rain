@@ -1,8 +1,5 @@
 package msu.ivan.rain.entity.mob;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import msu.ivan.rain.entity.Entity;
 import msu.ivan.rain.entity.projectile.Projectile;
 import msu.ivan.rain.entity.projectile.WizardProjectile;
@@ -13,7 +10,6 @@ public abstract class Mob extends Entity {
 	protected Sprite sprite;
 	protected int dir = -1; // for direction 0 = north, 1 = east, 2 = south, 3 = west
 	protected boolean moving = false;
-	protected List<Projectile> projectiles = new ArrayList<>();
 
 	public void move(int xChange, int yChange) {
 		if (xChange != 0 && yChange != 0) {
@@ -53,7 +49,7 @@ public abstract class Mob extends Entity {
 
 	public void shoot(int x, int y, double angle) {
 		Projectile wizardProjectile = new WizardProjectile(x, y, angle);
-		projectiles.add(wizardProjectile);
-		level.add(wizardProjectile);
+		level.addProjetile(wizardProjectile);
+		level.addEntity(wizardProjectile);
 	}
 }

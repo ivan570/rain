@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import msu.ivan.rain.entity.Entity;
+import msu.ivan.rain.entity.projectile.Projectile;
 import msu.ivan.rain.graphics.Screen;
 import msu.ivan.rain.level.tile.Tile;
 
@@ -16,6 +17,16 @@ public abstract class Level {
 
 	public final static Level spawn = new SpawnLevel("res/levels/spawn.png");
 	private List<Entity> entities = new ArrayList<>();
+	
+	public List<Entity> getEntities() {
+		return entities;
+	}
+
+	public List<Projectile> getProjectiles() {
+		return projectiles;
+	}
+
+	private List<Projectile> projectiles = new ArrayList<>();
 
 	// Constructor for randomLevel generation
 	public Level(int width, int height) {
@@ -24,9 +35,13 @@ public abstract class Level {
 		tilesInt = new int[height * width];
 		generateLevel();
 	}
-	
-	public void add(Entity entity) {
+
+	public void addEntity(Entity entity) {
 		entities.add(entity);
+	}
+
+	public void addProjetile(Projectile projectile) {
+		projectiles.add(projectile);
 	}
 
 	protected void generateLevel() {
@@ -71,6 +86,9 @@ public abstract class Level {
 		}
 		for (Entity entity : entities) {
 			entity.render(screen);
+		}
+		for (Projectile projectile : projectiles) {
+			projectile.render(screen);
 		}
 	}
 

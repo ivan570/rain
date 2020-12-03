@@ -2,6 +2,7 @@ package msu.ivan.rain.graphics;
 
 import java.util.Random;
 
+import msu.ivan.rain.entity.projectile.Projectile;
 import msu.ivan.rain.level.tile.Tile;
 
 public class Screen {
@@ -52,16 +53,17 @@ public class Screen {
 		}
 	}
 
-	public void renderTile(int xPosition, int yPosition, Sprite sprite) {
+	public void renderProjectile(int xPosition, int yPosition, Projectile projectile) {
 		xPosition -= xOfSet;
 		yPosition -= yOfSet;
-		for (int y = 0; y < sprite.SIZE; y++) {
+		for (int y = 0; y < projectile.getSpriteSize(); y++) {
 			int $y = y + yPosition;
-			for (int x = 0; x < sprite.SIZE; x++) {
+			for (int x = 0; x < projectile.getSpriteSize(); x++) {
 				int $x = x + xPosition;
-				if ($x < -sprite.SIZE || $x >= width || $y < 0 || $y >= height) break;
+				if ($x < -projectile.getSpriteSize() || $x >= width || $y < 0 || $y >= height) break;
 				if ($x < 0) $x = 0;
-				pixels[$x + $y * width] = sprite.pixels[x + y * sprite.SIZE];
+				int col = projectile.getSprite().pixels[x + y * projectile.getSpriteSize()];
+				if (col != 0xffff00ff) pixels[$x + $y * width] = col;
 			}
 		}
 	}
