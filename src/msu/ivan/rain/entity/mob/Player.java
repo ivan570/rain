@@ -1,6 +1,7 @@
 package msu.ivan.rain.entity.mob;
 
 import msu.ivan.rain.Game;
+import msu.ivan.rain.entity.projectile.WizardProjectile;
 import msu.ivan.rain.graphics.Screen;
 import msu.ivan.rain.graphics.Sprite;
 import msu.ivan.rain.input.Keyboard;
@@ -12,6 +13,7 @@ public class Player extends Mob {
 	private Sprite sprite = Sprite.player_forward;
 	private int anim = 0;
 	private boolean walking = false;
+	private int fireRate = 0;
 
 	// create Player at default location
 	public Player(Keyboard input) {
@@ -23,22 +25,31 @@ public class Player extends Mob {
 		this.x = x;
 		this.y = y;
 		this.input = input;
+		fireRate = WizardProjectile.FIRE_RATE;
 	}
 
 	@Override
 	public void update() {
+		if (fireRate > 0)
+			fireRate--;
 		int xChange = 0, yChange = 0;
 		anim++;
-		if (anim <= 0) anim = 0;
-		if (input.up) yChange--;
-		if (input.down) yChange++;
-		if (input.left) xChange--;
-		if (input.right) xChange++;
+		if (anim <= 0)
+			anim = 0;
+		if (input.up)
+			yChange--;
+		if (input.down)
+			yChange++;
+		if (input.left)
+			xChange--;
+		if (input.right)
+			xChange++;
 
 		if (xChange != 0 || yChange != 0) {
 			move(xChange, yChange);
 			walking = true;
-		} else walking = false;
+		} else
+			walking = false;
 
 		updateShooting();
 		clear();
@@ -51,14 +62,15 @@ public class Player extends Mob {
 			}
 		}
 	}
-	
+
 	private void updateShooting() {
-		if (Mouse.getMouseButton() == 1) {
+		if (Mouse.getMouseButton() == 1 && fireRate <= 0) {
 			double dx = Mouse.getMouseX() - Game.getWindowWidth() / 2;
 			double dy = Mouse.getMouseY() - Game.getWindowHeight() / 2;
 			double directionAngle = Math.atan2(dy, dx);
 //			shoot(Game.getWindowWidth() / 2, Game.getWindowHeight() / 2, directionAngle);
 			shoot(this.x, this.y, directionAngle);
+			fireRate = WizardProjectile.FIRE_RATE;
 		}
 	}
 
@@ -68,34 +80,42 @@ public class Player extends Mob {
 		if (dir == 0) {
 			sprite = Sprite.player_forward;
 			if (walking) {
-				if (anim % 20 > 10) sprite = Sprite.player_forward_1;
-				else sprite = Sprite.player_forward_2;
+				if (anim % 20 > 10)
+					sprite = Sprite.player_forward_1;
+				else
+					sprite = Sprite.player_forward_2;
 			}
 		}
 		if (dir == 1) {
 			sprite = Sprite.player_side;
 			if (walking) {
-				if (anim % 20 > 10) sprite = Sprite.player_side_1;
-				else sprite = Sprite.player_side_2;
+				if (anim % 20 > 10)
+					sprite = Sprite.player_side_1;
+				else
+					sprite = Sprite.player_side_2;
 			}
 		}
 		if (dir == 2) {
 			sprite = Sprite.player_back;
 			if (walking) {
-				if (anim % 20 > 10) sprite = Sprite.player_back_1;
-				else sprite = Sprite.player_back_2;
+				if (anim % 20 > 10)
+					sprite = Sprite.player_back_1;
+				else
+					sprite = Sprite.player_back_2;
 			}
 		}
 		if (dir == 3) {
 			sprite = Sprite.player_side;
 			if (walking) {
-				if (anim % 20 > 10) sprite = Sprite.player_side_1;
-				else sprite = Sprite.player_side_2;
+				if (anim % 20 > 10)
+					sprite = Sprite.player_side_1;
+				else
+					sprite = Sprite.player_side_2;
 			}
 			flip = 1;
 		}
 
-		screen.renderPLayer(x - 16, y - 16, sprite, flip);
+		screen.renderPlayer(x - 16, y - 16, sprite, flip);
 	}
 
 }

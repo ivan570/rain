@@ -40,6 +40,7 @@ public abstract class Level {
 	}
 
 	public void addProjetile(Projectile projectile) {
+		projectile.setLevel(this);
 		projectiles.add(projectile);
 	}
 
@@ -60,6 +61,16 @@ public abstract class Level {
 
 	private void time() {
 
+	}
+
+	public boolean tileCollision(double x, double y, double xChange, double yChange, int size) {
+		for (int c = 0; c < 4; c++) {
+			int $x = ((int) x + (int) xChange + c % 2 * (size * 2 - 12)) / 16;
+			int $y = ((int) y + (int) yChange + c / 2 * (size + 2)) / 16;
+			if (getTile($x, $y).solid())
+				return true;
+		}
+		return false;
 	}
 
 	// change = 60 update per second

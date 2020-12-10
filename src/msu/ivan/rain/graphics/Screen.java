@@ -68,7 +68,7 @@ public class Screen {
 		}
 	}
 
-	public void renderPLayer(int xPosition, int yPosition, Sprite sprite, int value) {
+	public void renderPlayer(int xPosition, int yPosition, Sprite sprite, int value) {
 		int size = 32;
 		xPosition -= xOfSet;
 		yPosition -= yOfSet;

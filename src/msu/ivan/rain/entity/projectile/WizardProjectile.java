@@ -5,23 +5,23 @@ import msu.ivan.rain.graphics.Sprite;
 
 public class WizardProjectile extends Projectile {
 
+	public static final int FIRE_RATE = 10; // higher the FIRE_RATE the slow number of the bullet in second.
+
 	public WizardProjectile(int xOrigin, int yOrigin, double direction) {
 		super(xOrigin, yOrigin, direction);
-		range = 100;
+		range = 200;
 		damage = 20;
 		speed = 4;
 		sprite = Sprite.projectiles_wizard;
-		rateOfFire = 15;
 		newX = Math.cos(angle) * speed;
 		newY = Math.sin(angle) * speed;
 	}
 
 	@Override
 	public void update() {
-		move();
-		if (distance() > range) {
+		if (level.tileCollision(x, y, newX, newY, 7))
 			remove();
-		}
+		move();
 	}
 
 	private double distance() {
@@ -32,7 +32,8 @@ public class WizardProjectile extends Projectile {
 	protected void move() {
 		x += newX;
 		y += newY;
-		if (distance() > range) remove();
+		if (distance() > range)
+			remove();
 	}
 
 	public void render(Screen screen) {

@@ -12,7 +12,6 @@ public abstract class Mob extends Entity {
 	protected boolean moving = false;
 
 	public void move(int xChange, int yChange) {
-		System.out.println("in mob move projectiles size " + level.getProjectiles().size() + " entities size " + level.getEntities().size());
 		if (xChange != 0 && yChange != 0) {
 			move(xChange, 0);
 			move(0, yChange);
