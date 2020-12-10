@@ -17,15 +17,6 @@ public abstract class Level {
 
 	public final static Level spawn = new SpawnLevel("res/levels/spawn.png");
 	private List<Entity> entities = new ArrayList<>();
-	
-	public List<Entity> getEntities() {
-		return entities;
-	}
-
-	public List<Projectile> getProjectiles() {
-		return projectiles;
-	}
-
 	private List<Projectile> projectiles = new ArrayList<>();
 
 	// Constructor for randomLevel generation
@@ -34,6 +25,14 @@ public abstract class Level {
 		this.height = height;
 		tilesInt = new int[height * width];
 		generateLevel();
+	}
+
+	public List<Entity> getEntities() {
+		return entities;
+	}
+
+	public List<Projectile> getProjectiles() {
+		return projectiles;
 	}
 
 	public void addEntity(Entity entity) {
@@ -68,6 +67,9 @@ public abstract class Level {
 		for (Entity entity : entities) {
 			entity.update();
 		}
+		for (Projectile projectile : projectiles) {
+			projectile.update();
+		}
 	}
 
 	public void render(int xScroll, int yScroll, Screen screen) {
@@ -96,15 +98,23 @@ public abstract class Level {
 	// Flower = 0xFFFFFF00
 	// Rock = 0xFF7F7F00
 	public Tile getTile(int x, int y) {
-		if (x < 0 || y < 0 || x >= width || y >= height) return Tile.voidTile;
+		if (x < 0 || y < 0 || x >= width || y >= height)
+			return Tile.voidTile;
 
-		if (tiles[x + y * width] == Tile.col_spawn_floor) return Tile.spawn_floor;
-		if (tiles[x + y * width] == Tile.col_spawn_grass) return Tile.spawn_grass;
-		if (tiles[x + y * width] == Tile.col_spawn_hedge) return Tile.spawn_hedge;
-		if (tiles[x + y * width] == Tile.col_spawn_water) return Tile.spawn_water;
-		if (tiles[x + y * width] == Tile.col_spawn_wall1) return Tile.spawn_wall1;
-		if (tiles[x + y * width] == Tile.col_spawn_wall2) return Tile.spawn_wall2;
-		if (tiles[x + y * width] == 0xff7f7f00) return Tile.rock;
+		if (tiles[x + y * width] == Tile.col_spawn_floor)
+			return Tile.spawn_floor;
+		if (tiles[x + y * width] == Tile.col_spawn_grass)
+			return Tile.spawn_grass;
+		if (tiles[x + y * width] == Tile.col_spawn_hedge)
+			return Tile.spawn_hedge;
+		if (tiles[x + y * width] == Tile.col_spawn_water)
+			return Tile.spawn_water;
+		if (tiles[x + y * width] == Tile.col_spawn_wall1)
+			return Tile.spawn_wall1;
+		if (tiles[x + y * width] == Tile.col_spawn_wall2)
+			return Tile.spawn_wall2;
+		if (tiles[x + y * width] == 0xff7f7f00)
+			return Tile.rock;
 
 		return Tile.voidTile;
 	}

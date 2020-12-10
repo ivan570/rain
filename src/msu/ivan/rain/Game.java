@@ -29,13 +29,6 @@ public class Game extends Canvas implements Runnable {
 	private JFrame frame;
 	private boolean running = false;
 
-	public static int getWindowWidth() {
-		return width * scale;
-	}
-
-	public static int getWindowHeight() {
-		return height * scale;
-	}
 
 	private Keyboard keyboard;
 	private Mouse mouse;
@@ -61,6 +54,14 @@ public class Game extends Canvas implements Runnable {
 		mouse = new Mouse();
 		addMouseListener(mouse);
 		addMouseMotionListener(mouse);
+	}
+
+	public static int getWindowWidth() {
+		return width * scale;
+	}
+
+	public static int getWindowHeight() {
+		return height * scale;
 	}
 
 	public synchronized void start() {

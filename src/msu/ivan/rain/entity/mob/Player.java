@@ -41,8 +41,17 @@ public class Player extends Mob {
 		} else walking = false;
 
 		updateShooting();
+		clear();
 	}
 
+	private void clear() {
+		for (int i = 0; i < level.getProjectiles().size(); i++) {
+			if (level.getProjectiles().get(i).isRemoved()) {
+				level.getProjectiles().remove(i);
+			}
+		}
+	}
+	
 	private void updateShooting() {
 		if (Mouse.getMouseButton() == 1) {
 			double dx = Mouse.getMouseX() - Game.getWindowWidth() / 2;
