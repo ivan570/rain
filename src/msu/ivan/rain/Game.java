@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 
 import msu.ivan.rain.entity.mob.Player;
 import msu.ivan.rain.graphics.Screen;
+import msu.ivan.rain.graphics.Sprite;
 import msu.ivan.rain.input.Keyboard;
 import msu.ivan.rain.input.Mouse;
 import msu.ivan.rain.level.Level;
@@ -131,6 +132,8 @@ public class Game extends Canvas implements Runnable {
 		level.render(xScroll, yScroll, screen);
 		player.render(screen);
 
+//		Sprite sprite = new Sprite(40, height, 0xff0000);
+//		screen.renderSprite(width - 40, 0, sprite, false);
 		for (int i = 0; i < screen.pixels.length; ++i) {
 			pixels[i] = screen.pixels[i];
 		}

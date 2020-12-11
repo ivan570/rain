@@ -7,6 +7,8 @@ package msu.ivan.rain.graphics;
 public class Sprite {
 
 	public final int SIZE;
+	private int width, height;
+
 	private int x, y; // refer the pixels value of coordinate of sprite
 
 	private SpriteSheet spriteSheet; // refer the specific SpriteSheet object
@@ -26,42 +28,63 @@ public class Sprite {
 	public static Sprite spawn_wall1 = new Sprite(16, 0, 1, SpriteSheet.spawn_level);
 	public static Sprite spawn_wall2 = new Sprite(16, 0, 2, SpriteSheet.spawn_level);
 	public static Sprite spawn_floor = new Sprite(16, 1, 1, SpriteSheet.spawn_level);
-	
+
 	// player sprite here
 	public static Sprite player_forward = new Sprite(32, 0, 5, SpriteSheet.tiles);
 	public static Sprite player_back = new Sprite(32, 2, 5, SpriteSheet.tiles);
 	public static Sprite player_side = new Sprite(32, 1, 5, SpriteSheet.tiles);
-	
+
 	public static Sprite player_forward_1 = new Sprite(32, 0, 6, SpriteSheet.tiles);
 	public static Sprite player_forward_2 = new Sprite(32, 0, 7, SpriteSheet.tiles);
-	
+
 	public static Sprite player_back_1 = new Sprite(32, 2, 6, SpriteSheet.tiles);
 	public static Sprite player_back_2 = new Sprite(32, 2, 7, SpriteSheet.tiles);
-	
+
 	public static Sprite player_side_1 = new Sprite(32, 1, 6, SpriteSheet.tiles);
 	public static Sprite player_side_2 = new Sprite(32, 1, 7, SpriteSheet.tiles);
-	
+
 	public static Sprite projectiles_wizard = new Sprite(16, 0, 0, SpriteSheet.projectile_wizard);
-	// for create void tile to avoid NullPointerException
+
+	// Particles
+	public static Sprite particle_normal = new Sprite(3, 0x999999);
+	// for create void tile to avoid NullPointerException	
 	public Sprite(int size, int color) {
 		SIZE = size;
 		pixels = new int[SIZE * SIZE];
+		this.height = this.width = size;
 		setColor(color);
 	}
 
-	public void setColor(int color) {
-		for (int i = 0; i < SIZE * SIZE; i++) {
-			pixels[i] = color;
-		}
+	public Sprite(int width, int height, int color) {
+		SIZE = -1;
+		this.height = height;
+		pixels = new int[width * height];
+		this.width = width;
+		setColor(color);
 	}
 
 	public Sprite(int size, int x, int y, SpriteSheet spriteSheet) {
 		this.SIZE = size;
 		this.x = x * this.SIZE;
+		this.height = this.width = size;
 		this.y = y * this.SIZE;
 		this.spriteSheet = spriteSheet;
 		this.pixels = new int[this.SIZE * this.SIZE];
 		load();
+	}
+
+	public void setColor(int color) {
+		for (int i = 0; i < width * height; i++) {
+			pixels[i] = color;
+		}
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
 	}
 
 	private void load() {

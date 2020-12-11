@@ -37,6 +37,22 @@ public class Screen {
 		this.yOfSet = yOfSet;
 	}
 
+	public void renderSprite(int xPosition, int yPosition, Sprite sprite, boolean fixed) {
+		if (fixed) {
+			xPosition -= xOfSet;
+			yPosition -= yOfSet;
+		}
+		for (int y = 0; y < sprite.getHeight(); y++) {
+			int $y = y + yPosition;
+			for (int x = 0; x < sprite.getWidth(); x++) {
+				int $x = x + xPosition;
+				if ($x < 0 || $x >= width || $y < 0 || $y >= height)
+					continue;
+				pixels[$x + $y * width] = sprite.pixels[x + y * sprite.getWidth()];
+			}
+		}
+	}
+
 	public void renderTile(int xPosition, int yPosition, Tile tile) {
 		// to make position to relative to the ofSet value
 		// to move map into opposite direction.
@@ -46,8 +62,10 @@ public class Screen {
 			int $y = y + yPosition;
 			for (int x = 0; x < tile.sprite.SIZE; x++) {
 				int $x = x + xPosition;
-				if ($x < -tile.sprite.SIZE || $x >= width || $y < 0 || $y >= height) break;
-				if ($x < 0) $x = 0;
+				if ($x < -tile.sprite.SIZE || $x >= width || $y < 0 || $y >= height)
+					break;
+				if ($x < 0)
+					$x = 0;
 				pixels[$x + $y * width] = tile.sprite.pixels[x + y * tile.sprite.SIZE];
 			}
 		}
@@ -60,10 +78,13 @@ public class Screen {
 			int $y = y + yPosition;
 			for (int x = 0; x < projectile.getSpriteSize(); x++) {
 				int $x = x + xPosition;
-				if ($x < -projectile.getSpriteSize() || $x >= width || $y < 0 || $y >= height) break;
-				if ($x < 0) $x = 0;
+				if ($x < -projectile.getSpriteSize() || $x >= width || $y < 0 || $y >= height)
+					break;
+				if ($x < 0)
+					$x = 0;
 				int col = projectile.getSprite().pixels[x + y * projectile.getSpriteSize()];
-				if (col != 0xffff00ff) pixels[$x + $y * width] = col;
+				if (col != 0xffff00ff)
+					pixels[$x + $y * width] = col;
 			}
 		}
 	}
@@ -75,18 +96,23 @@ public class Screen {
 		for (int y = 0; y < size; y++) {
 			int $y = y + yPosition;
 			int ySprite = y;
-			if (value == 2 || value == 3) ySprite = size - 1 - y;
+			if (value == 2 || value == 3)
+				ySprite = size - 1 - y;
 
 			for (int x = 0; x < size; x++) {
 				int $x = x + xPosition;
 				int xSprite = x;
 
-				if (value == 1 || value == 3) xSprite = size - 1 - x;
-				if ($x < -size || $x >= width || $y < 0 || $y >= height) break;
-				if ($x < 0) $x = 0;
+				if (value == 1 || value == 3)
+					xSprite = size - 1 - x;
+				if ($x < -size || $x >= width || $y < 0 || $y >= height)
+					break;
+				if ($x < 0)
+					$x = 0;
 
 				int color = sprite.pixels[xSprite + ySprite * size];
-				if (color != 0xffff00ff) pixels[$x + $y * width] = color;
+				if (color != 0xffff00ff)
+					pixels[$x + $y * width] = color;
 			}
 		}
 	}

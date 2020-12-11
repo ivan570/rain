@@ -1,6 +1,7 @@
 package msu.ivan.rain.entity.mob;
 
 import msu.ivan.rain.entity.Entity;
+import msu.ivan.rain.entity.particle.Particle;
 import msu.ivan.rain.entity.projectile.Projectile;
 import msu.ivan.rain.entity.projectile.WizardProjectile;
 import msu.ivan.rain.graphics.Sprite;
@@ -31,7 +32,7 @@ public abstract class Mob extends Entity {
 		if (!collision(xChange, yChange)) {
 			x += xChange;
 			y += yChange;
-		}
+		} 
 	}
 
 	public void update() {
@@ -54,6 +55,6 @@ public abstract class Mob extends Entity {
 
 	public void shoot(int x, int y, double angle) {
 		Projectile wizardProjectile = new WizardProjectile(x, y, angle);
-		level.addProjetile(wizardProjectile);
+		level.add(wizardProjectile);
 	}
 }

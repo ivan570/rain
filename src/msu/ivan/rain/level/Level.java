@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import msu.ivan.rain.entity.Entity;
+import msu.ivan.rain.entity.particle.Particle;
 import msu.ivan.rain.entity.projectile.Projectile;
 import msu.ivan.rain.graphics.Screen;
 import msu.ivan.rain.level.tile.Tile;
@@ -18,6 +19,7 @@ public abstract class Level {
 	public final static Level spawn = new SpawnLevel("res/levels/spawn.png");
 	private List<Entity> entities = new ArrayList<>();
 	private List<Projectile> projectiles = new ArrayList<>();
+	private List<Particle> particles = new ArrayList<>();
 
 	// Constructor for randomLevel generation
 	public Level(int width, int height) {
@@ -31,17 +33,22 @@ public abstract class Level {
 		return entities;
 	}
 
+	public List<Particle> getParticles() {
+		return particles;
+	}
+
 	public List<Projectile> getProjectiles() {
 		return projectiles;
 	}
 
-	public void addEntity(Entity entity) {
-		entities.add(entity);
-	}
-
-	public void addProjetile(Projectile projectile) {
-		projectile.setLevel(this);
-		projectiles.add(projectile);
+	public void add(Entity entity) {
+		entity.setLevel(this);
+		if (entity instanceof Particle)
+			particles.add((Particle) entity);
+		else if (entity instanceof Projectile)
+			projectiles.add((Projectile) entity);
+		else
+			entities.add(entity);
 	}
 
 	protected void generateLevel() {
@@ -81,6 +88,25 @@ public abstract class Level {
 		for (Projectile projectile : projectiles) {
 			projectile.update();
 		}
+		for (Particle particle : particles) {
+			particle.update();
+		}
+		remove();
+	}
+
+	private void remove() {
+		for (int i = 0; i < entities.size(); i++) {
+			if (entities.get(i).isRemoved())
+				entities.remove(i);
+		}
+		for (int i = 0; i < projectiles.size(); i++) {
+			if (projectiles.get(i).isRemoved())
+				projectiles.remove(i);
+		}
+		for (int i = 0; i < particles.size(); i++) {
+			if (particles.get(i).isRemoved())
+				particles.remove(i);
+		}
 	}
 
 	public void render(int xScroll, int yScroll, Screen screen) {
@@ -102,6 +128,9 @@ public abstract class Level {
 		}
 		for (Projectile projectile : projectiles) {
 			projectile.render(screen);
+		}
+		for (Particle particle : particles) {
+			particle.render(screen);
 		}
 	}
 

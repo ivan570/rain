@@ -1,5 +1,6 @@
 package msu.ivan.rain.entity.projectile;
 
+import msu.ivan.rain.entity.spawner.ParticleSpawner;
 import msu.ivan.rain.graphics.Screen;
 import msu.ivan.rain.graphics.Sprite;
 
@@ -19,8 +20,10 @@ public class WizardProjectile extends Projectile {
 
 	@Override
 	public void update() {
-		if (level.tileCollision(x, y, newX, newY, 7))
+		if (level.tileCollision(x, y, newX, newY, 7)) {
+			level.add(new ParticleSpawner((int) x, (int) y, 44, 50, level));
 			remove();
+		}
 		move();
 	}
 
