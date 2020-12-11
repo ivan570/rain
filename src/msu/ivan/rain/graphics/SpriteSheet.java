@@ -65,23 +65,24 @@ public class SpriteSheet {
 				pixels[tempX + tempY * $width] = sheet.pixels[xPosition + yPosition * sheet.WIDTH];
 			}
 		}
-
+		int frame = 0;
 		for (int ya = 0; ya < height; ya++) {
 			for (int xa = 0; xa < width; xa++) {
 				int[] spritePixel = new int[spriteSize * spriteSize];
 				for (int y0 = 0; y0 < $height; y0++) {
 					for (int x0 = 0; x0 < $width; x0++) {
 						spritePixel[x0 + y0 * spriteSize] = pixels[(x0 + xa *spriteSize) + (y0 + ya * spriteSize)];
-						Sprite sprite = new Sprite();
 					}
 				}
+				Sprite sprite = new Sprite(spritePixel, spriteSize, spriteSize);
+				sprites[frame++] = sprite;
 			}
 		}
 
 	}
 
 	public Sprite[] getSprite() {
-
+		return sprites;
 	}
 
 	private void load(String path) {

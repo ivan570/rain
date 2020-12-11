@@ -11,7 +11,7 @@ public class Sprite {
 
 	private int x, y; // refer the pixels value of coordinate of sprite
 
-	private SpriteSheet spriteSheet; // refer the specific SpriteSheet object
+	protected SpriteSheet spriteSheet; // refer the specific SpriteSheet object
 	public int[] pixels;
 
 	// create the grass sprite the starting with (0, 0) and SIZE = 16
@@ -54,6 +54,13 @@ public class Sprite {
 		this.height = height;
 		this.width = width;
 		this.spriteSheet = sheet;
+	}
+
+	public Sprite(int[] pixel, int width, int height) {
+		SIZE = (width == height) ? width : -1;
+		this.height = height;
+		this.width = width;
+		this.pixels = pixel;
 	}
 
 	public Sprite(int size, int color) {
