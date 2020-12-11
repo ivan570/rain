@@ -37,6 +37,22 @@ public class Screen {
 		this.yOfSet = yOfSet;
 	}
 
+	public void renderSpriteSheet(int xPosition, int yPosition, SpriteSheet spriteSheet, boolean fixed) {
+		if (fixed) {
+			xPosition -= xOfSet;
+			yPosition -= yOfSet;
+		}
+		for (int y = 0; y < spriteSheet.HEIGHT; y++) {
+			int $y = y + yPosition;
+			for (int x = 0; x < spriteSheet.WIDTH; x++) {
+				int $x = x + xPosition;
+				if ($x < 0 || $x >= width || $y < 0 || $y >= height)
+					continue;
+				pixels[$x + $y * width] = spriteSheet.pixels[x + y * spriteSheet.WIDTH];
+			}
+		}
+	}
+
 	public void renderSprite(int xPosition, int yPosition, Sprite sprite, boolean fixed) {
 		if (fixed) {
 			xPosition -= xOfSet;

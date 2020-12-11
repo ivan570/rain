@@ -47,7 +47,15 @@ public class Sprite {
 
 	// Particles
 	public static Sprite particle_normal = new Sprite(3, 0x999999);
-	// for create void tile to avoid NullPointerException	
+	// for create void tile to avoid NullPointerException
+
+	protected Sprite(SpriteSheet sheet, int width, int height) {
+		SIZE = (width == height) ? width : -1;
+		this.height = height;
+		this.width = width;
+		this.spriteSheet = sheet;
+	}
+
 	public Sprite(int size, int color) {
 		SIZE = size;
 		pixels = new int[SIZE * SIZE];

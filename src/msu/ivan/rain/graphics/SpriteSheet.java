@@ -13,20 +13,75 @@ import javax.imageio.ImageIO;
 public class SpriteSheet {
 
 	private String path;
-	public final int SIZE;
+	public final int SIZE, HEIGHT, WIDTH;
 	public int[] pixels;
+	private Sprite[] sprites;
 
 	// create the SpriteSheet object of are sprite-sheet file which we created
 	public static SpriteSheet tiles = new SpriteSheet("res/textures/sheets/spritesheet.png", 256);
-	public static SpriteSheet spawn_level = new SpriteSheet("res/textures/sheets/spawn_level.png",48);
-	public static SpriteSheet projectile_wizard = new SpriteSheet("res/textures/sheets/projectiles/wizard.png",48);
-	
+	public static SpriteSheet spawn_level = new SpriteSheet("res/textures/sheets/spawn_level.png", 48);
+	public static SpriteSheet projectile_wizard = new SpriteSheet("res/textures/sheets/projectiles/wizard.png", 48);
+
+	// player sprite-sheet
+	public static SpriteSheet player = new SpriteSheet("res/textures/sheets/player_sheet.png", 128, 96);
+	public static SpriteSheet player_down = new SpriteSheet(player, 0, 0, 1, 3, 32);
+
 	public SpriteSheet(String path, int SIZE) {
 		this.path = path;
-		this.SIZE = SIZE;
+		this.SIZE = HEIGHT = WIDTH = SIZE;
 		this.pixels = new int[this.SIZE * this.SIZE];
 
 		load(this.path);
+	}
+
+	public SpriteSheet(String path, int width, int height) {
+		this.SIZE = -1;
+		this.path = path;
+		this.HEIGHT = height;
+		this.WIDTH = width;
+		this.pixels = new int[this.WIDTH * this.HEIGHT];
+
+		load(this.path);
+	}
+
+	public SpriteSheet(SpriteSheet sheet, int x, int y, int width, int height, int spriteSize) {
+		int $x = x * spriteSize;
+		int $y = y * spriteSize;
+		int $width = width * spriteSize;
+		int $height = height * spriteSize;
+		this.WIDTH = $width;
+		this.HEIGHT = $height;
+		if (this.WIDTH == this.HEIGHT)
+			this.SIZE = this.HEIGHT;
+		else
+			this.SIZE = -1;
+
+		pixels = new int[$width * $height];
+
+		for (int tempY = 0; tempY < $height; tempY++) {
+			int yPosition = $y + tempY;
+			for (int tempX = 0; tempX < $width; tempX++) {
+				int xPosition = $x + tempX;
+				pixels[tempX + tempY * $width] = sheet.pixels[xPosition + yPosition * sheet.WIDTH];
+			}
+		}
+
+		for (int ya = 0; ya < height; ya++) {
+			for (int xa = 0; xa < width; xa++) {
+				int[] spritePixel = new int[spriteSize * spriteSize];
+				for (int y0 = 0; y0 < $height; y0++) {
+					for (int x0 = 0; x0 < $width; x0++) {
+						spritePixel[x0 + y0 * spriteSize] = pixels[(x0 + xa *spriteSize) + (y0 + ya * spriteSize)];
+						Sprite sprite = new Sprite();
+					}
+				}
+			}
+		}
+
+	}
+
+	public Sprite[] getSprite() {
+
 	}
 
 	private void load(String path) {
