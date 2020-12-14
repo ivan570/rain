@@ -66,12 +66,13 @@ public class SpriteSheet {
 			}
 		}
 		int frame = 0;
+		sprites = new Sprite[width * height];
 		for (int ya = 0; ya < height; ya++) {
 			for (int xa = 0; xa < width; xa++) {
 				int[] spritePixel = new int[spriteSize * spriteSize];
-				for (int y0 = 0; y0 < $height; y0++) {
-					for (int x0 = 0; x0 < $width; x0++) {
-						spritePixel[x0 + y0 * spriteSize] = pixels[(x0 + xa *spriteSize) + (y0 + ya * spriteSize)];
+				for (int y0 = 0; y0 < spriteSize; y0++) {
+					for (int x0 = 0; x0 < spriteSize; x0++) {
+						spritePixel[x0 + y0 * spriteSize] = pixels[(x0 + xa * spriteSize) + (y0 + ya * spriteSize) * width];
 					}
 				}
 				Sprite sprite = new Sprite(spritePixel, spriteSize, spriteSize);

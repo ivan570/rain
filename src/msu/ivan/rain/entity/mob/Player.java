@@ -2,8 +2,10 @@ package msu.ivan.rain.entity.mob;
 
 import msu.ivan.rain.Game;
 import msu.ivan.rain.entity.projectile.WizardProjectile;
+import msu.ivan.rain.graphics.AnimatedSprite;
 import msu.ivan.rain.graphics.Screen;
 import msu.ivan.rain.graphics.Sprite;
+import msu.ivan.rain.graphics.SpriteSheet;
 import msu.ivan.rain.input.Keyboard;
 import msu.ivan.rain.input.Mouse;
 
@@ -14,6 +16,7 @@ public class Player extends Mob {
 	private int anim = 0;
 	private boolean walking = false;
 	private int fireRate = 0;
+	private AnimatedSprite test = new AnimatedSprite(SpriteSheet.player_down, 32, 32, 3);
 
 	// create Player at default location
 	public Player(Keyboard input) {
@@ -30,6 +33,7 @@ public class Player extends Mob {
 
 	@Override
 	public void update() {
+		test.update();
 		if (fireRate > 0)
 			fireRate--;
 		int xChange = 0, yChange = 0;
@@ -114,7 +118,7 @@ public class Player extends Mob {
 			}
 			flip = 1;
 		}
-
+		sprite = test.getSprite();
 		screen.renderPlayer(x - 16, y - 16, sprite, flip);
 	}
 

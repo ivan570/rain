@@ -119,7 +119,7 @@ public class Game extends Canvas implements Runnable {
 		level.update();
 	}
 
-//	change = unlimited times per second 
+//	change = unlimited times per second
 	public void render() {
 		BufferStrategy bufferStrategy = getBufferStrategy();
 		if (bufferStrategy == null) {
