@@ -1,4 +1,4 @@
-package msu.ivan.rain;
+package msu.ivan.rain; // ivankshu vaghani 
 
 import java.awt.Canvas;
 import java.awt.Color;
