@@ -6,6 +6,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import msu.ivan.rain.entity.mob.Dummy;
+
 public class SpawnLevel extends Level {
 
 	public SpawnLevel(String path) {
@@ -16,7 +18,7 @@ public class SpawnLevel extends Level {
 	protected void loadLevel(String path) {
 		try {
 			BufferedImage bufferedImage = ImageIO.read(new File(path));
-			width =bufferedImage.getWidth();
+			width = bufferedImage.getWidth();
 			height = bufferedImage.getHeight();
 			tiles = new int[width * height];
 			bufferedImage.getRGB(0, 0, width, height, tiles, 0, width);
@@ -25,6 +27,8 @@ public class SpawnLevel extends Level {
 			e.printStackTrace();
 			System.out.println("msu.ivan.rain.level::SpawnLevel::loadLevel()");
 		}
+		for (int i = 0; i < 5; ++i)
+			add(new Dummy(19, 62));
 	}
 
 	@Override

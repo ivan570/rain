@@ -16,7 +16,12 @@ public class Player extends Mob {
 	private int anim = 0;
 	private boolean walking = false;
 	private int fireRate = 0;
-	private AnimatedSprite test = new AnimatedSprite(SpriteSheet.player_down, 32, 32, 3);
+
+	private AnimatedSprite down = new AnimatedSprite(SpriteSheet.player_down, 32, 32, 3);
+	private AnimatedSprite up = new AnimatedSprite(SpriteSheet.player_up, 32, 32, 3);
+	private AnimatedSprite left = new AnimatedSprite(SpriteSheet.player_left, 32, 32, 3);
+	private AnimatedSprite right = new AnimatedSprite(SpriteSheet.player_right, 32, 32, 3);
+	private AnimatedSprite animatedSprite = down;
 
 	// create Player at default location
 	public Player(Keyboard input) {
@@ -33,22 +38,30 @@ public class Player extends Mob {
 
 	@Override
 	public void update() {
-		test.update();
+		if (walking)
+			animatedSprite.update();
+		else
+			animatedSprite.setFrame(0);
 		if (fireRate > 0)
 			fireRate--;
 		int xChange = 0, yChange = 0;
 		anim++;
 		if (anim <= 0)
 			anim = 0;
-		if (input.up)
+		if (input.up) {
+			animatedSprite = up;
 			yChange--;
-		if (input.down)
+		} else if (input.down) {
+			animatedSprite = down;
 			yChange++;
-		if (input.left)
+		}
+		if (input.left) {
+			animatedSprite = left;
 			xChange--;
-		if (input.right)
+		} else if (input.right) {
+			animatedSprite = right;
 			xChange++;
-
+		}
 		if (xChange != 0 || yChange != 0) {
 			move(xChange, yChange);
 			walking = true;
@@ -72,7 +85,7 @@ public class Player extends Mob {
 			double dx = Mouse.getMouseX() - Game.getWindowWidth() / 2;
 			double dy = Mouse.getMouseY() - Game.getWindowHeight() / 2;
 			double directionAngle = Math.atan2(dy, dx);
-//			shoot(Game.getWindowWidth() / 2, Game.getWindowHeight() / 2, directionAngle);
+			// shoot(Game.getWindowWidth() / 2, Game.getWindowHeight() / 2, directionAngle);
 			shoot(this.x, this.y, directionAngle);
 			fireRate = WizardProjectile.FIRE_RATE;
 		}
@@ -81,45 +94,8 @@ public class Player extends Mob {
 	@Override
 	public void render(Screen screen) {
 		int flip = 0; // value = 0 no flip, 1 for x flip, 2 for y flip, 3 for both flip
-		if (dir == 0) {
-			sprite = Sprite.player_forward;
-			if (walking) {
-				if (anim % 20 > 10)
-					sprite = Sprite.player_forward_1;
-				else
-					sprite = Sprite.player_forward_2;
-			}
-		}
-		if (dir == 1) {
-			sprite = Sprite.player_side;
-			if (walking) {
-				if (anim % 20 > 10)
-					sprite = Sprite.player_side_1;
-				else
-					sprite = Sprite.player_side_2;
-			}
-		}
-		if (dir == 2) {
-			sprite = Sprite.player_back;
-			if (walking) {
-				if (anim % 20 > 10)
-					sprite = Sprite.player_back_1;
-				else
-					sprite = Sprite.player_back_2;
-			}
-		}
-		if (dir == 3) {
-			sprite = Sprite.player_side;
-			if (walking) {
-				if (anim % 20 > 10)
-					sprite = Sprite.player_side_1;
-				else
-					sprite = Sprite.player_side_2;
-			}
-			flip = 1;
-		}
-		sprite = test.getSprite();
-		screen.renderPlayer(x - 16, y - 16, sprite, flip);
+		sprite = animatedSprite.getSprite();
+		screen.renderMob(x - 16, y - 16, sprite, flip);
 	}
 
 }

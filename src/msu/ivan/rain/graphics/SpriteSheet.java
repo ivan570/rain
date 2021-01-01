@@ -19,13 +19,22 @@ public class SpriteSheet {
 
 	// create the SpriteSheet object of are sprite-sheet file which we created
 	public static SpriteSheet tiles = new SpriteSheet("res/textures/sheets/spritesheet.png", 256);
-	public static SpriteSheet spawn_level = new SpriteSheet("res/textures/sheets/spawn_level.png", 48);
+	public static SpriteSheet spawn_level = new SpriteSheet("res/textures/sheets/spawn_lvl.png", 48);
 	public static SpriteSheet projectile_wizard = new SpriteSheet("res/textures/sheets/projectiles/wizard.png", 48);
 
 	// player sprite-sheet
 	public static SpriteSheet player = new SpriteSheet("res/textures/sheets/player_sheet.png", 128, 96);
 	public static SpriteSheet player_down = new SpriteSheet(player, 0, 0, 1, 3, 32);
+	public static SpriteSheet player_up = new SpriteSheet(player, 1, 0, 1, 3, 32);
+	public static SpriteSheet player_left = new SpriteSheet(player, 2, 0, 1, 3, 32);
+	public static SpriteSheet player_right = new SpriteSheet(player, 3, 0, 1, 3, 32);
 
+	public static SpriteSheet dummy = new SpriteSheet("res/textures/sheets/king_cherno.png", 128, 96);
+	public static SpriteSheet dummy_down = new SpriteSheet(dummy, 0, 0, 1, 3, 32);
+	public static SpriteSheet dummy_up = new SpriteSheet(dummy, 1, 0, 1, 3, 32);
+	public static SpriteSheet dummy_left = new SpriteSheet(dummy, 2, 0, 1, 3, 32);
+	public static SpriteSheet dummy_right = new SpriteSheet(dummy, 3, 0, 1, 3, 32);
+	
 	public SpriteSheet(String path, int SIZE) {
 		this.path = path;
 		this.SIZE = HEIGHT = WIDTH = SIZE;
@@ -72,7 +81,7 @@ public class SpriteSheet {
 				int[] spritePixel = new int[spriteSize * spriteSize];
 				for (int y0 = 0; y0 < spriteSize; y0++) {
 					for (int x0 = 0; x0 < spriteSize; x0++) {
-						spritePixel[x0 + y0 * spriteSize] = pixels[(x0 + xa * spriteSize) + (y0 + ya * spriteSize) * width];
+						spritePixel[x0 + y0 * spriteSize] = pixels[(x0 + xa * spriteSize) + (y0 + ya * spriteSize) * WIDTH];
 					}
 				}
 				Sprite sprite = new Sprite(spritePixel, spriteSize, spriteSize);
@@ -82,7 +91,7 @@ public class SpriteSheet {
 
 	}
 
-	public Sprite[] getSprite() {
+	public Sprite[] getSprites() {
 		return sprites;
 	}
 

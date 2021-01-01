@@ -49,7 +49,9 @@ public class Sprite {
 	public static Sprite particle_normal = new Sprite(3, 0x999999);
 	// for create void tile to avoid NullPointerException
 
-	protected Sprite(SpriteSheet sheet, int width, int height) {
+	public static Sprite dummy = new Sprite(32, 0, 0, SpriteSheet.dummy_down);
+	
+	public Sprite(SpriteSheet sheet, int width, int height) {
 		SIZE = (width == height) ? width : -1;
 		this.height = height;
 		this.width = width;
@@ -103,12 +105,15 @@ public class Sprite {
 	}
 
 	private void load() {
-		for (int y = 0; y < SIZE; y++) {
-			for (int x = 0; x < SIZE; x++) {
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
 				int $x = x + this.x, $y = y + this.y;
-				pixels[x + y * SIZE] = spriteSheet.pixels[$x + $y * spriteSheet.SIZE];
+				pixels[x + y * width] = spriteSheet.pixels[$x + $y * spriteSheet.WIDTH];
 			}
 		}
 	}
 
+	public String toString() {
+		return "the sprite size = " + SIZE + " widht = " + width + " height  " + height + " x " + x + " y " + y;
+	}
 }
