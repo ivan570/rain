@@ -43,23 +43,24 @@ public class Player extends Mob {
 			animatedSprite.setFrame(0);
 		if (fireRate > 0)
 			fireRate--;
-		int xChange = 0, yChange = 0;
+		double xChange = 0, yChange = 0;
 		anim++;
+		double speed = 1.9;
 		if (anim <= 0)
 			anim = 0;
 		if (input.up) {
 			animatedSprite = up;
-			yChange--;
+			yChange -= speed;
 		} else if (input.down) {
 			animatedSprite = down;
-			yChange++;
+			yChange += speed;
 		}
 		if (input.left) {
 			animatedSprite = left;
-			xChange--;
+			xChange -= speed;
 		} else if (input.right) {
 			animatedSprite = right;
-			xChange++;
+			xChange += speed;
 		}
 		if (xChange != 0 || yChange != 0) {
 			move(xChange, yChange);
@@ -94,7 +95,7 @@ public class Player extends Mob {
 	public void render(Screen screen) {
 		int flip = 0; // value = 0 no flip, 1 for x flip, 2 for y flip, 3 for both flip
 		sprite = animatedSprite.getSprite();
-		screen.renderMob(x - 16, y - 16, sprite, flip);
+		screen.renderMob((int) (x - 16), (int) (y - 16), sprite, flip);
 	}
 
 }

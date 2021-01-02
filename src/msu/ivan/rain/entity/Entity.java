@@ -8,7 +8,8 @@ import msu.ivan.rain.level.Level;
 
 public abstract class Entity {
 
-	public int x, y;
+	protected double x, y;
+
 	private boolean removed = false;
 	protected Sprite sprite;
 	protected Level level;
@@ -24,6 +25,14 @@ public abstract class Entity {
 		this.sprite = sprite;
 	}
 
+	public double getX() {
+		return x;
+	}
+
+	public double getY() {
+		return y;
+	}
+
 	public void setLevel(Level level) {
 		this.level = level;
 	}
@@ -33,7 +42,7 @@ public abstract class Entity {
 	}
 
 	public void render(Screen screen) {
-
+		if (sprite != null) screen.renderSprite((int)x, (int)y, sprite, true);
 	}
 	
 	public Sprite getSprite() {
@@ -47,5 +56,9 @@ public abstract class Entity {
 
 	public boolean isRemoved() {
 		return removed;
+	}
+	
+	public String toString() {
+		return "X = " + x + " Y " + y;
 	}
 }

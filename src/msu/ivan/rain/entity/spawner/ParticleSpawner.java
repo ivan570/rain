@@ -13,4 +13,8 @@ public class ParticleSpawner extends Spawner {
 		for (int i = 0; i < amount; i++)
 			level.add(new Particle(x, y, life));
 	}
+
+	public int getLife() {
+		return life;
+	}
 }

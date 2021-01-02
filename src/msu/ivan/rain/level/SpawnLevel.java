@@ -27,9 +27,8 @@ public class SpawnLevel extends Level {
 			e.printStackTrace();
 			System.out.println("msu.ivan.rain.level::SpawnLevel::loadLevel()");
 		}
-		for (int i = 0; i < 1; ++i) {
-			add(new Chaser(19, 62));
-		}
+		for (int i = 0; i < 1; ++i)
+			add(new Chaser(25, 62));
 	}
 
 	@Override

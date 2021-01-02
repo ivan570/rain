@@ -155,12 +155,20 @@ public class Screen {
 				int color = mob.getSprite().pixels[xSprite + ySprite * size];
 
 				if ((mob instanceof Chaser)) {
+					if (color == 0xff7D4F18)
+						color = 0xff444444;
+					if (color == 0xff326EDD)
+						color = 0xffff0000;
 					if (color == 0xff472bbf)
 						color = 0xffff00aa;
 					if (color == 0xffFEFF60)
 						color = 0xff20D7DF;
 					if (color == 0xffDEE03F)
 						color = 0xff1A32D9;
+					if (color == 0xffECC9E4)
+						color = 0xffc6BDBB;
+					if (color == 0xffD7B4CF)
+						color = 0xffB7B4D7;
 				}
 				if (color != 0xffff00ff)
 					pixels[$x + $y * width] = color;

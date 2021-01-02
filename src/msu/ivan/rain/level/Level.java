@@ -18,9 +18,11 @@ public abstract class Level {
 	protected int[] tiles;
 
 	public final static Level spawn = new SpawnLevel("res/levels/spawn.png");
-	private List<Entity> entities = new ArrayList<>();
-	private List<Projectile> projectiles = new ArrayList<>();
-	private List<Particle> particles = new ArrayList<>();
+	private List<Entity> entities = new ArrayList<Entity>();
+	private List<Projectile> projectiles = new ArrayList<Projectile>();
+	private List<Particle> particles = new ArrayList<Particle>();
+
+	private List<Player> players = new ArrayList<Player>();
 
 	// Constructor for randomLevel generation
 	public Level(int width, int height) {
@@ -48,6 +50,8 @@ public abstract class Level {
 			particles.add((Particle) entity);
 		else if (entity instanceof Projectile)
 			projectiles.add((Projectile) entity);
+		else if (entity instanceof Player)
+			players.add((Player) entity);
 		else
 			entities.add(entity);
 	}
@@ -67,12 +71,45 @@ public abstract class Level {
 
 	}
 
-	public Player getPlayer() {
-		for (int i = 0; i < entities.size(); i++) {
-			if (entities.get(i) instanceof Player)
-				return (Player)entities.get(i);
+	public List<Player> getPlayers() {
+		return players;
+	}
+
+	public List<Entity> getEntities(Entity e, int radius) {
+		List<Entity> result = new ArrayList<Entity>();
+		double ex = e.getX(), ey = e.getY();
+
+		for (Entity entity : entities) {
+			double x = entity.getX(), y = entity.getY();
+			double dx = x - ex, dy = y - ey;
+			double distance = Math.sqrt(dx * dx + dy * dy);
+			if (distance < radius)
+				result.add(entity);
 		}
-		return null;
+
+		return result;
+	}
+
+	public List<Player> getPlayers(Entity e, int radius) {
+		List<Player> result = new ArrayList<Player>();
+		double ex = e.getX(), ey = e.getY();
+
+		for (Player player : players) {
+			double x = player.getX(), y = player.getY();
+			double dx = x - ex, dy = y - ey;
+			double distance = Math.sqrt(dx * dx + dy * dy);
+			if (distance < radius)
+				result.add(player);
+		}
+		return result;
+	}
+
+	public Player getPlayerAt(int index) {
+		return players.get(index);
+	}
+
+	public Player getClientPlayer() {
+		return players.get(0);
 	}
 
 	public boolean tileCollision(int x, int y, int size, int xOffset, int yOffset) {
@@ -96,6 +133,9 @@ public abstract class Level {
 		for (Particle particle : particles) {
 			particle.update();
 		}
+		for (Player player : players) {
+			player.update();
+		}
 		remove();
 	}
 
@@ -111,6 +151,10 @@ public abstract class Level {
 		for (int i = 0; i < particles.size(); i++) {
 			if (particles.get(i).isRemoved())
 				particles.remove(i);
+		}
+		for (int i = 0; i < players.size(); i++) {
+			if (players.get(i).isRemoved())
+				players.remove(i);
 		}
 	}
 
@@ -136,6 +180,9 @@ public abstract class Level {
 		}
 		for (Particle particle : particles) {
 			particle.render(screen);
+		}
+		for (Player player : players) {
+			player.render(screen);
 		}
 	}
 

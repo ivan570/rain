@@ -1,4 +1,4 @@
-package msu.ivan.rain; // ivankshu vaghani 
+package msu.ivan.rain;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -29,7 +29,6 @@ public class Game extends Canvas implements Runnable {
 	private JFrame frame;
 	private boolean running = false;
 
-
 	private Keyboard keyboard;
 	private Mouse mouse;
 	private Player player;
@@ -48,8 +47,8 @@ public class Game extends Canvas implements Runnable {
 		level = Level.spawn;
 		TileCoordinate playerSpawn = new TileCoordinate(19, 62);
 		player = new Player(playerSpawn.getX(), playerSpawn.getY(), keyboard);
-		player.setLevel(level);
-//		IMP
+		level.add(player);
+		// IMP
 		addKeyListener(keyboard);
 		mouse = new Mouse();
 		addMouseListener(mouse);
@@ -65,14 +64,16 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public synchronized void start() {
-		if (running) return;
+		if (running)
+			return;
 		running = true;
 		thread = new Thread(this, "threadInGame");
 		thread.start();
 	}
 
 	public synchronized void stop() {
-		if (!running) return;
+		if (!running)
+			return;
 		running = false;
 		try {
 			thread.join();
@@ -110,14 +111,13 @@ public class Game extends Canvas implements Runnable {
 		stop();
 	}
 
-//	change = 60 times per second to be run at maximum
+	// change = 60 times per second to be run at maximum
 	public void update() {
 		keyboard.update();
-		player.update();
 		level.update();
 	}
 
-//	change = unlimited times per second
+	// change = unlimited times per second
 	public void render() {
 		BufferStrategy bufferStrategy = getBufferStrategy();
 		if (bufferStrategy == null) {
@@ -126,14 +126,13 @@ public class Game extends Canvas implements Runnable {
 		}
 
 		screen.clear();
-		int xScroll = player.x - screen.width / 2;
-		int yScroll = player.y - screen.height / 2;
-		level.render(xScroll, yScroll, screen);
-		player.render(screen);
-//		screen.renderSpriteSheet(40, 40, SpriteSheet.player_down, false);
+		double xScroll = player.getX() - screen.width / 2;
+		double yScroll = player.getY() - screen.height / 2;
+		level.render((int) xScroll, (int) yScroll, screen);
+		// screen.renderSpriteSheet(40, 40, SpriteSheet.player_down, false);
 
-//		Sprite sprite = new Sprite(40, height, 0xff0000);
-//		screen.renderSprite(width - 40, 0, sprite, false);
+		// Sprite sprite = new Sprite(40, height, 0xff0000);
+		// screen.renderSprite(width - 40, 0, sprite, false);
 		for (int i = 0; i < screen.pixels.length; ++i) {
 			pixels[i] = screen.pixels[i];
 		}
@@ -142,8 +141,8 @@ public class Game extends Canvas implements Runnable {
 		graphics.drawImage(bufferedImage, 0, 0, getWidth(), getHeight(), null);
 		graphics.setColor(Color.white);
 		graphics.setFont(new Font("Consolas", Font.BOLD, 30));
-//		if (Mouse.getMouseButton() != -1)
-//			graphics.drawString(String.format("x: %d, y : %d", Mouse.getMouseX(), Mouse.getMouseY()), 90, 90);
+		// if (Mouse.getMouseButton() != -1)
+		// graphics.drawString(String.format("x: %d, y : %d", Mouse.getMouseX(), Mouse.getMouseY()), 90, 90);
 		graphics.dispose();
 		bufferStrategy.show();
 	}

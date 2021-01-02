@@ -12,10 +12,10 @@ public class Dummy extends Mob {
 	private AnimatedSprite left = new AnimatedSprite(SpriteSheet.dummy_left, 32, 32, 3);
 	private AnimatedSprite right = new AnimatedSprite(SpriteSheet.dummy_right, 32, 32, 3);
 	private AnimatedSprite animatedSprite = down;
-	
+
 	private int time = 0;
 	private int xChange = 0, yChange = 0;
-	
+
 	public Dummy(int x, int y) {
 		this.x = x << 4;
 		this.y = y << 4;
@@ -40,7 +40,7 @@ public class Dummy extends Mob {
 			animatedSprite = down;
 			dir = Direction.DOWN;
 		}
-		
+
 		if (xChange < 0) {
 			animatedSprite = left;
 			dir = Direction.LEFT;
@@ -48,7 +48,7 @@ public class Dummy extends Mob {
 			animatedSprite = right;
 			dir = Direction.RIGHT;
 		}
-		
+
 		if (xChange != 0 || yChange != 0) {
 			move(xChange, yChange);
 			walking = true;
@@ -58,7 +58,7 @@ public class Dummy extends Mob {
 	}
 
 	public void render(Screen screen) {
-		screen.renderMob(x, y, sprite, 0);
+		screen.renderMob((int)(x - 16), (int)(y - 16), sprite, 0);
 	}
 
 }

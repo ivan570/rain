@@ -1,6 +1,7 @@
 package msu.ivan.rain.entity.mob;
 
-import msu.ivan.rain.entity.mob.Mob;
+import java.util.List;
+
 import msu.ivan.rain.graphics.AnimatedSprite;
 import msu.ivan.rain.graphics.Screen;
 import msu.ivan.rain.graphics.SpriteSheet;
@@ -21,8 +22,20 @@ public class Chaser extends Mob {
 	}
 
 	private void move() {
-		
-		
+		xChange = yChange = 0;
+		List<Player> players = level.getPlayers(this, 50);
+		if (players.size() > 0) {
+			Player player = players.get(0);
+
+			if (x < player.getX())
+				xChange++;
+			if (x > player.getX())
+				xChange--;
+			if (y < player.getY())
+				yChange++;
+			if (y > player.getY())
+				yChange--;
+		}
 		if (xChange != 0 || yChange != 0) {
 			move(xChange, yChange);
 			walking = true;
@@ -60,7 +73,7 @@ public class Chaser extends Mob {
 	@Override
 	public void render(Screen screen) {
 		sprite = animatedSprite.getSprite();
-		screen.renderMob(x, y, this);
+		screen.renderMob((int) (x - 16), (int) (y - 16), this);
 	}
 
 }

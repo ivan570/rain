@@ -8,7 +8,7 @@ public class WizardProjectile extends Projectile {
 
 	public static final int FIRE_RATE = 10; // higher the FIRE_RATE the slow number of the bullet in second.
 
-	public WizardProjectile(int xOrigin, int yOrigin, double direction) {
+	public WizardProjectile(double xOrigin, double yOrigin, double direction) {
 		super(xOrigin, yOrigin, direction);
 		range = 200;
 		damage = 20;
