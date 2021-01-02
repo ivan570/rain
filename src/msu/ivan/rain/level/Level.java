@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import msu.ivan.rain.entity.Entity;
+import msu.ivan.rain.entity.mob.Player;
 import msu.ivan.rain.entity.particle.Particle;
 import msu.ivan.rain.entity.projectile.Projectile;
 import msu.ivan.rain.graphics.Screen;
@@ -66,8 +67,12 @@ public abstract class Level {
 
 	}
 
-	private void time() {
-
+	public Player getPlayer() {
+		for (int i = 0; i < entities.size(); i++) {
+			if (entities.get(i) instanceof Player)
+				return (Player)entities.get(i);
+		}
+		return null;
 	}
 
 	public boolean tileCollision(int x, int y, int size, int xOffset, int yOffset) {

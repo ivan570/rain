@@ -2,6 +2,8 @@ package msu.ivan.rain.graphics;
 
 import java.util.Random;
 
+import msu.ivan.rain.entity.mob.Chaser;
+import msu.ivan.rain.entity.mob.Mob;
 import msu.ivan.rain.entity.projectile.Projectile;
 import msu.ivan.rain.level.tile.Tile;
 
@@ -133,4 +135,36 @@ public class Screen {
 		}
 	}
 
+	public void renderMob(int xPosition, int yPosition, Mob mob) {
+		int size = 32;
+		xPosition -= xOfSet;
+		yPosition -= yOfSet;
+		for (int y = 0; y < size; y++) {
+			int $y = y + yPosition;
+			int ySprite = y;
+
+			for (int x = 0; x < size; x++) {
+				int $x = x + xPosition;
+				int xSprite = x;
+
+				if ($x < -size || $x >= width || $y < 0 || $y >= height)
+					break;
+				if ($x < 0)
+					$x = 0;
+
+				int color = mob.getSprite().pixels[xSprite + ySprite * size];
+
+				if ((mob instanceof Chaser)) {
+					if (color == 0xff472bbf)
+						color = 0xffff00aa;
+					if (color == 0xffFEFF60)
+						color = 0xff20D7DF;
+					if (color == 0xffDEE03F)
+						color = 0xff1A32D9;
+				}
+				if (color != 0xffff00ff)
+					pixels[$x + $y * width] = color;
+			}
+		}
+	}
 }

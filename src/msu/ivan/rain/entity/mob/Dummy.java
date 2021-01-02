@@ -12,7 +12,6 @@ public class Dummy extends Mob {
 	private AnimatedSprite left = new AnimatedSprite(SpriteSheet.dummy_left, 32, 32, 3);
 	private AnimatedSprite right = new AnimatedSprite(SpriteSheet.dummy_right, 32, 32, 3);
 	private AnimatedSprite animatedSprite = down;
-	private boolean walking = false;
 	
 	private int time = 0;
 	private int xChange = 0, yChange = 0;

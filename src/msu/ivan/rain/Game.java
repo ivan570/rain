@@ -13,7 +13,6 @@ import javax.swing.JFrame;
 
 import msu.ivan.rain.entity.mob.Player;
 import msu.ivan.rain.graphics.Screen;
-import msu.ivan.rain.graphics.SpriteSheet;
 import msu.ivan.rain.input.Keyboard;
 import msu.ivan.rain.input.Mouse;
 import msu.ivan.rain.level.Level;

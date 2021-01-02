@@ -4,12 +4,11 @@ import msu.ivan.rain.entity.Entity;
 import msu.ivan.rain.entity.projectile.Projectile;
 import msu.ivan.rain.entity.projectile.WizardProjectile;
 import msu.ivan.rain.graphics.Screen;
-import msu.ivan.rain.graphics.Sprite;
 
 public abstract class Mob extends Entity {
 
-	protected Sprite sprite;
 	protected boolean moving = false;
+	protected boolean walking = false;
 
 	public enum Direction {
 		UP, DOWN, LEFT, RIGHT
@@ -57,4 +56,5 @@ public abstract class Mob extends Entity {
 		Projectile wizardProjectile = new WizardProjectile(x, y, angle);
 		level.add(wizardProjectile);
 	}
+
 }
