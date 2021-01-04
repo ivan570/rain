@@ -1,6 +1,8 @@
 package msu.ivan.rain.level;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import msu.ivan.rain.entity.Entity;
@@ -9,6 +11,7 @@ import msu.ivan.rain.entity.particle.Particle;
 import msu.ivan.rain.entity.projectile.Projectile;
 import msu.ivan.rain.graphics.Screen;
 import msu.ivan.rain.level.tile.Tile;
+import msu.ivan.rain.util.Vector2i;
 
 // their are two level first level => the randomLevel and second level => getLevelFromFile
 public abstract class Level {
@@ -23,6 +26,17 @@ public abstract class Level {
 	private List<Particle> particles = new ArrayList<Particle>();
 
 	private List<Player> players = new ArrayList<Player>();
+
+	private Comparator<Node> nodeSorter = new Comparator<Node>() {
+
+		public int compare(Node n0, Node n1) {
+			if (n0.fCost > n1.fCost)
+				return 1;
+			else if (n0.fCost < n1.fCost)
+				return -1;
+			return 0;
+		}
+	};
 
 	// Constructor for randomLevel generation
 	public Level(int width, int height) {
@@ -110,6 +124,64 @@ public abstract class Level {
 
 	public Player getClientPlayer() {
 		return players.get(0);
+	}
+
+	public List<Node> findPath(Vector2i start, Vector2i goal) {
+		List<Node> openList = new ArrayList<Node>();
+		List<Node> closeList = new ArrayList<Node>();
+		Node current = new Node(start, null, 0, getDistance(start, goal));
+		openList.add(current);
+
+		while (!openList.isEmpty()) {
+			Collections.sort(openList, nodeSorter);
+			current = openList.get(0);
+			if (current.tile.equals(goal)) {
+				List<Node> path = new ArrayList<Node>();
+				while (current.parent != null) {
+					path.add(current);
+					current = current.parent;
+				}
+				openList.clear();
+				closeList.clear();
+				return path;
+			}
+			openList.remove(current);
+			closeList.add(current);
+			for (int i = 0; i < 9; i++) {
+				if (i == 4)
+					continue;
+				int x = current.tile.getX(), y = current.tile.getY();
+				int xi = (i % 3) - 1;
+				int yi = (i / 3) - 1;
+				Tile at = getTile(x + xi, y + yi);
+				if (at == null || at.solid())
+					continue;
+				Vector2i a = new Vector2i(x + xi, y + yi);
+				double gCost = current.gCost + getDistance(current.tile, a);
+				double hCost = getDistance(a, goal);
+				Node node = new Node(a, current, gCost, hCost);
+				if (vecInList(closeList, a) && gCost >= current.gCost)
+					continue;
+				if (!vecInList(openList, a) || gCost < current.gCost)
+					openList.add(node);
+			}
+		}
+		closeList.clear();
+		return null;
+	}
+
+	private boolean vecInList(List<Node> list, Vector2i vector) {
+		for (Node n : list) {
+			if (n.tile.equals(vector))
+				return true;
+		}
+		return false;
+	}
+
+	private double getDistance(Vector2i tile, Vector2i goal) {
+		double dx = tile.getX() - goal.getX();
+		double dy = tile.getY() - goal.getY();
+		return Math.sqrt(dx * dx + dy * dy);
 	}
 
 	public boolean tileCollision(int x, int y, int size, int xOffset, int yOffset) {

@@ -4,6 +4,7 @@ import java.util.Random;
 
 import msu.ivan.rain.entity.mob.Chaser;
 import msu.ivan.rain.entity.mob.Mob;
+import msu.ivan.rain.entity.mob.Star;
 import msu.ivan.rain.entity.projectile.Projectile;
 import msu.ivan.rain.level.tile.Tile;
 
@@ -154,22 +155,12 @@ public class Screen {
 
 				int color = mob.getSprite().pixels[xSprite + ySprite * size];
 
-				if ((mob instanceof Chaser)) {
-					if (color == 0xff7D4F18)
-						color = 0xff444444;
-					if (color == 0xff326EDD)
-						color = 0xffff0000;
-					if (color == 0xff472bbf)
-						color = 0xffff00aa;
-					if (color == 0xffFEFF60)
-						color = 0xff20D7DF;
-					if (color == 0xffDEE03F)
-						color = 0xff1A32D9;
-					if (color == 0xffECC9E4)
-						color = 0xffc6BDBB;
-					if (color == 0xffD7B4CF)
-						color = 0xffB7B4D7;
-				}
+				if ((mob instanceof Chaser) && (color == 0xff472bbf))
+					color = 0xffba0015;
+
+				if ((mob instanceof Star) && (color == 0xff472bbf))
+					color = 0xffE8E83A;
+
 				if (color != 0xffff00ff)
 					pixels[$x + $y * width] = color;
 			}

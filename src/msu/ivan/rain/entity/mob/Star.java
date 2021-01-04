@@ -1,33 +1,53 @@
 package msu.ivan.rain.entity.mob;
 
+import java.util.List;
+
 import msu.ivan.rain.graphics.AnimatedSprite;
 import msu.ivan.rain.graphics.Screen;
 import msu.ivan.rain.graphics.Sprite;
 import msu.ivan.rain.graphics.SpriteSheet;
 
-public class Dummy extends Mob {
-
+public class Star extends Mob {
 	private AnimatedSprite down = new AnimatedSprite(SpriteSheet.dummy_down, 32, 32, 3);
 	private AnimatedSprite up = new AnimatedSprite(SpriteSheet.dummy_up, 32, 32, 3);
 	private AnimatedSprite left = new AnimatedSprite(SpriteSheet.dummy_left, 32, 32, 3);
 	private AnimatedSprite right = new AnimatedSprite(SpriteSheet.dummy_right, 32, 32, 3);
 	private AnimatedSprite animatedSprite = down;
 
-	private int time = 0;
-	private int xa = 0, ya = 0;
+	private double xa = 0, ya = 0, speed = 0.8;
+//	private int time = 0;
 
-	public Dummy(int x, int y) {
+	public Star(int x, int y) {
 		this.x = x << 4;
 		this.y = y << 4;
 		sprite = Sprite.dummy;
 	}
 
-	public void update() {
-		time++;
-		if (time % (random.nextInt(30) + 30) == 0) {
-			xa = (random.nextInt(5) != 0) ? (random.nextInt(3) - 1) : 0;
-			ya = (random.nextInt(5) != 0) ? (random.nextInt(3) - 1) : 0;
+	private void move() {
+		xa = ya = 0;
+		List<Player> players = level.getPlayers(this, 50);
+		if (players.size() > 0) {
+			Player player = players.get(0);
+
+			if (this.x < player.getX())
+				xa+=speed;
+			else if (this.x > player.getX())
+				xa-=speed;
+			if (this.y < player.getY())
+				ya+=speed;
+			else if (this.y > player.getY())
+				ya-=speed;
 		}
+		if (xa != 0 || ya != 0) {
+			move(xa, ya);
+			walking = true;
+		} else {
+			walking = false;
+		}
+	}
+
+	public void update() {
+		move();
 		if (walking)
 			animatedSprite.update();
 		else
@@ -58,7 +78,7 @@ public class Dummy extends Mob {
 	}
 
 	public void render(Screen screen) {
-		screen.renderMob((int)(x - 16), (int)(y - 16), sprite, 0);
+		screen.renderMob((int) (x - 16), (int) (y - 16), sprite, 0);
 	}
 
 }

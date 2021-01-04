@@ -16,42 +16,42 @@ public abstract class Mob extends Entity {
 
 	public Direction dir;
 
-	public void move(double xChange, double yChange) {
-		if (xChange != 0 && yChange != 0) {
-			move(xChange, 0);
-			move(0, yChange);
+	public void move(double xa, double ya) {
+		if (xa != 0 && ya != 0) {
+			move(xa, 0);
+			move(0, ya);
 			return;
 		}
 
-		if (xChange > 0)
+		if (xa > 0)
 			dir = Direction.RIGHT;
-		if (xChange < 0)
+		if (xa < 0)
 			dir = Direction.LEFT;
-		if (yChange > 0)
+		if (ya > 0)
 			dir = Direction.DOWN;
-		if (yChange < 0)
+		if (ya < 0)
 			dir = Direction.UP;
 
-		while (Math.abs(xChange) > 0) {
-			if (Math.abs(xChange) > 1) {
-				if (!collision(abs(xChange), yChange))
-					this.x += abs(xChange);
-				xChange -= abs(xChange);
+		while (xa != 0) {
+			if (Math.abs(xa) > 1) {
+				if (!collision(abs(xa), ya))
+					this.x += abs(xa);
+				xa -= abs(xa);
 			} else {
-				if (!collision(abs(xChange), yChange))
-					this.x += xChange;
-				xChange = 0;
+				if (!collision(abs(xa), ya))
+					this.x += xa;
+				xa = 0;
 			}
 		}
-		while (Math.abs(yChange) > 0) {
-			if (Math.abs(yChange) > 1) {
-				if (!collision(xChange, abs(yChange)))
-					this.y += abs(yChange);
-				yChange -= abs(yChange);
+		while (ya != 0) {
+			if (Math.abs(ya) > 1) {
+				if (!collision(xa, abs(ya)))
+					this.y += abs(ya);
+				ya -= abs(ya);
 			} else {
-				if (!collision(xChange, abs(yChange)))
-					this.y += yChange;
-				yChange = 0;
+				if (!collision(xa, abs(ya)))
+					this.y += ya;
+				ya = 0;
 			}
 		}
 	}

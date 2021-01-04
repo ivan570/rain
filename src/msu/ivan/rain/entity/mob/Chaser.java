@@ -11,33 +11,33 @@ public class Chaser extends Mob {
 	private AnimatedSprite up = new AnimatedSprite(SpriteSheet.dummy_up, 32, 32, 3);
 	private AnimatedSprite left = new AnimatedSprite(SpriteSheet.dummy_left, 32, 32, 3);
 	private AnimatedSprite right = new AnimatedSprite(SpriteSheet.dummy_right, 32, 32, 3);
-	private AnimatedSprite animatedSprite = down;
+	private AnimatedSprite animatedSprite = up;
 
-	private int xChange = 0, yChange = 0;
+	private int xa = 0, ya = 0;
 
 	public Chaser(int x, int y) {
 		this.x = x << 4;
 		this.y = y << 4;
-		sprite = animatedSprite.getSprite();
+		this.sprite = animatedSprite.getSprite();
 	}
 
 	private void move() {
-		xChange = yChange = 0;
+		xa = ya = 0;
 		List<Player> players = level.getPlayers(this, 50);
 		if (players.size() > 0) {
 			Player player = players.get(0);
 
-			if (x < player.getX())
-				xChange++;
-			if (x > player.getX())
-				xChange--;
-			if (y < player.getY())
-				yChange++;
-			if (y > player.getY())
-				yChange--;
+			if (this.x < player.getX())
+				xa++;
+			else if (this.x > player.getX())
+				xa--;
+			if (this.y < player.getY())
+				ya++;
+			else if (this.y > player.getY())
+				ya--;
 		}
-		if (xChange != 0 || yChange != 0) {
-			move(xChange, yChange);
+		if (xa != 0 || ya != 0) {
+			move(xa, ya);
 			walking = true;
 		} else {
 			walking = false;
@@ -52,18 +52,18 @@ public class Chaser extends Mob {
 		else
 			animatedSprite.setFrame(0);
 
-		if (yChange < 0) {
+		if (ya < 0) {
 			animatedSprite = up;
 			dir = Direction.UP;
-		} else if (yChange > 0) {
+		} else if (ya > 0) {
 			animatedSprite = down;
 			dir = Direction.DOWN;
 		}
 
-		if (xChange < 0) {
+		if (xa < 0) {
 			animatedSprite = left;
 			dir = Direction.LEFT;
-		} else if (xChange > 0) {
+		} else if (xa > 0) {
 			animatedSprite = right;
 			dir = Direction.RIGHT;
 		}
