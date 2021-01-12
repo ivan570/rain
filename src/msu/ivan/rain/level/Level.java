@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import msu.ivan.rain.entity.Entity;
+import msu.ivan.rain.entity.mob.Mob;
 import msu.ivan.rain.entity.mob.Player;
 import msu.ivan.rain.entity.particle.Particle;
 import msu.ivan.rain.entity.projectile.Projectile;
@@ -103,21 +104,21 @@ public abstract class Level {
 
 		return result;
 	}
-
-	public List<Player> getPlayers(Entity e, int radius) {
-		List<Player> result = new ArrayList<Player>();
-		double ex = e.getX(), ey = e.getY();
-
-		for (Player player : players) {
-			double x = player.getX(), y = player.getY();
-			double dx = x - ex, dy = y - ey;
-			double distance = Math.sqrt(dx * dx + dy * dy);
-			if (distance < radius)
-				result.add(player);
+	public List<Mob> getPlayers(Entity e, int radius) {
+		List<Mob> result = new ArrayList<Mob>();
+		double ex = e.getX();
+		double ey = e.getY();
+		for (int i = 0; i < players.size(); i++) {
+			Mob player = players.get(i);
+			double x = player.getX();
+			double y = player.getY();
+			double dx = Math.abs(x - ex);
+			double dy = Math.abs(y - ey);
+			double distance = Math.sqrt((dx * dx) + (dy * dy));
+			if (distance <= radius) result.add(player);
 		}
 		return result;
 	}
-
 	public Player getPlayerAt(int index) {
 		return players.get(index);
 	}
