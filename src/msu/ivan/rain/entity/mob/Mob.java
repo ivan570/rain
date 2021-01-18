@@ -67,8 +67,8 @@ public abstract class Mob extends Entity {
 
 	private boolean collision(double xChange, double yChange) {
 		for (int c = 0; c < 4; c++) {
-			double $x = ((x + xChange) - c % 2 * 16) / 16;
-			double $y = ((y + yChange) - c / 2 * 16) / 16;
+			double $x = ((x + xChange) - c % 2 * 15) / 16;
+			double $y = ((y + yChange) - c / 2 * 15) / 16;
 			int ix = (int) Math.ceil($x);
 			int iy = (int) Math.ceil($y);
 			if (c % 2 == 0)

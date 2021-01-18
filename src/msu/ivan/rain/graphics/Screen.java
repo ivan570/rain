@@ -159,7 +159,7 @@ public class Screen {
 					color = 0xffba0015;
 
 				if ((mob instanceof Star) && (color == 0xff472bbf))
-					color = 0xffE8E83A;
+					color = 0xff2C4251;
 
 				if (color != 0xffff00ff)
 					pixels[$x + $y * width] = color;

@@ -104,6 +104,7 @@ public abstract class Level {
 
 		return result;
 	}
+
 	public List<Mob> getPlayers(Entity e, int radius) {
 		List<Mob> result = new ArrayList<Mob>();
 		double ex = e.getX();
@@ -115,10 +116,12 @@ public abstract class Level {
 			double dx = Math.abs(x - ex);
 			double dy = Math.abs(y - ey);
 			double distance = Math.sqrt((dx * dx) + (dy * dy));
-			if (distance <= radius) result.add(player);
+			if (distance <= radius)
+				result.add(player);
 		}
 		return result;
 	}
+
 	public Player getPlayerAt(int index) {
 		return players.get(index);
 	}
@@ -158,7 +161,7 @@ public abstract class Level {
 				if (at == null || at.solid())
 					continue;
 				Vector2i a = new Vector2i(x + xi, y + yi);
-				double gCost = current.gCost + getDistance(current.tile, a);
+				double gCost = current.gCost + (getDistance(current.tile, a) == 1 ? 1 : 0.95);
 				double hCost = getDistance(a, goal);
 				Node node = new Node(a, current, gCost, hCost);
 				if (vecInList(closeList, a) && gCost >= current.gCost)
@@ -182,7 +185,8 @@ public abstract class Level {
 	private double getDistance(Vector2i tile, Vector2i goal) {
 		double dx = tile.getX() - goal.getX();
 		double dy = tile.getY() - goal.getY();
-		return Math.sqrt(dx * dx + dy * dy);
+		double distance = Math.sqrt(dx * dx + dy * dy);
+		return distance;
 	}
 
 	public boolean tileCollision(int x, int y, int size, int xOffset, int yOffset) {

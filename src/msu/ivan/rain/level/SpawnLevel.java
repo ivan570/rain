@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import msu.ivan.rain.entity.mob.Chaser;
+import msu.ivan.rain.entity.mob.Shooter;
 
 public class SpawnLevel extends Level {
 
@@ -28,7 +28,7 @@ public class SpawnLevel extends Level {
 			System.out.println("msu.ivan.rain.level::SpawnLevel::loadLevel()");
 		}
 		for (int i = 0; i < 1; ++i)
-			add(new Chaser(19, 62));
+			add(new Shooter(19, 62));
 	}
 
 	@Override
